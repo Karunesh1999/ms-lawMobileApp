@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import type { AppFlowState, TabType } from './types/portal';
 import { Topbar } from './components/layout/Topbar';
 import { BottomNav } from './components/layout/BottomNav';
+import { ResponsiveDeviceWrapper } from './components/layout/ResponsiveDeviceWrapper';
 import { NotificationsModal } from './components/modals/NotificationsModal';
 import { BookConsultationModal } from './components/modals/BookConsultationModal';
 import { UploadDocumentModal } from './components/modals/UploadDocumentModal';
@@ -36,20 +37,20 @@ export function App() {
     setIsNotificationsOpen(false);
   };
 
-  if (appFlow === 'splash') {
-    return <SplashScreen />;
-  }
+  const renderActiveScreen = () => {
+    if (appFlow === 'splash') {
+      return <SplashScreen />;
+    }
 
-  if (appFlow === 'onboarding') {
-    return <OnboardingScreen onGetStarted={() => setAppFlow('auth')} />;
-  }
+    if (appFlow === 'onboarding') {
+      return <OnboardingScreen onGetStarted={() => setAppFlow('auth')} />;
+    }
 
-  if (appFlow === 'auth') {
-    return <AuthScreen onLogin={() => setAppFlow('app')} />;
-  }
+    if (appFlow === 'auth') {
+      return <AuthScreen onLogin={() => setAppFlow('app')} />;
+    }
 
-  return (
-    <main className="app-shell">
+    return (
       <div className="phone-frame">
         <Topbar
           onOpenNotifications={() => setIsNotificationsOpen(true)}
@@ -134,7 +135,13 @@ export function App() {
           />
         )}
       </div>
-    </main>
+    );
+  };
+
+  return (
+    <ResponsiveDeviceWrapper>
+      {renderActiveScreen()}
+    </ResponsiveDeviceWrapper>
   );
 }
 
