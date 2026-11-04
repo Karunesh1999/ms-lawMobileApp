@@ -30,3 +30,4 @@ export function Topbar({ onOpenNotifications, onOpenProfile }: TopbarProps) {
     </header>
   );
 }
+

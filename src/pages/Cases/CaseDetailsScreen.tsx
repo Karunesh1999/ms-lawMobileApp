@@ -88,3 +88,4 @@ export function CaseDetailsScreen({ onBack, onMessage, onUpload }: CaseDetailsSc
 }
 
 export default CaseDetailsScreen;
+

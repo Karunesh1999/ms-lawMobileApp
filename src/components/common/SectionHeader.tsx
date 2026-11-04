@@ -12,3 +12,4 @@ export function SectionHeader({ title, subtitle }: SectionHeaderProps) {
     </section>
   );
 }
+

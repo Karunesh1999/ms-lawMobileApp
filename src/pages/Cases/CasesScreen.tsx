@@ -128,3 +128,4 @@ export function CasesScreen({ onTab, onOpenCase }: CasesScreenProps) {
 }
 
 export default CasesScreen;
+

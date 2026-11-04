@@ -37,3 +37,4 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Messages', icon: MessageCircle },
   { label: 'Profile', icon: UserRound },
 ];
+

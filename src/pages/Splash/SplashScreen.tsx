@@ -13,3 +13,4 @@ export function SplashScreen() {
 }
 
 export default SplashScreen;
+

@@ -42,3 +42,4 @@ export function OnboardingScreen({ onGetStarted }: OnboardingScreenProps) {
 }
 
 export default OnboardingScreen;
+

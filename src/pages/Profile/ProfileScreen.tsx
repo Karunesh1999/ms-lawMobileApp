@@ -60,3 +60,4 @@ export function ProfileScreen({ onLogout }: ProfileScreenProps) {
 }
 
 export default ProfileScreen;
+

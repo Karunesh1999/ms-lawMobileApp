@@ -33,3 +33,4 @@ export function UploadDocumentModal({ onClose }: UploadDocumentModalProps) {
     </ModalWrapper>
   );
 }
+

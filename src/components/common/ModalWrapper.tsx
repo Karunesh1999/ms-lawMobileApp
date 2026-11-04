@@ -18,3 +18,4 @@ export function ModalWrapper({ children, onClose }: ModalWrapperProps) {
     </div>
   );
 }
+

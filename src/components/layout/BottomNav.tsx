@@ -22,3 +22,4 @@ export function BottomNav({ activeTab, onSelectTab }: BottomNavProps) {
     </nav>
   );
 }
+

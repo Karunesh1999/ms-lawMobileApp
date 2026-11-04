@@ -11,3 +11,4 @@ export function MSLawLogo({ compact = false }: MSLawLogoProps) {
     />
   );
 }
+

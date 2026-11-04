@@ -18,3 +18,4 @@ export function ActionCard({ icon: Icon, label, onClick }: ActionCardProps) {
     </button>
   );
 }
+

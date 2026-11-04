@@ -18,3 +18,4 @@ export function SectionHeading({ title, action, onClick }: SectionHeadingProps) 
     </div>
   );
 }
+

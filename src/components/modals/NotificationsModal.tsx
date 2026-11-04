@@ -40,3 +40,4 @@ export function NotificationsModal({ onClose }: NotificationsModalProps) {
     </ModalWrapper>
   );
 }
+

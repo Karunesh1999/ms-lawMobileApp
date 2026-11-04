@@ -74,3 +74,4 @@ export function AppointmentsScreen({ onConsult }: AppointmentsScreenProps) {
 }
 
 export default AppointmentsScreen;
+

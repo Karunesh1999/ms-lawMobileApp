@@ -21,3 +21,4 @@ export interface NavItem {
   label: TabType;
   icon: ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
 }
+

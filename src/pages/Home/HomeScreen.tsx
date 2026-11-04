@@ -135,3 +135,4 @@ export function HomeScreen({ onConsult, onUpload, onTab }: HomeScreenProps) {
 }
 
 export default HomeScreen;
+
