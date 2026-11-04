@@ -12,6 +12,7 @@ export function BottomNav({ activeTab, onSelectTab }: BottomNavProps) {
       {NAV_ITEMS.map(({ label, icon: Icon }) => (
         <button
           key={label}
+          type="button"
           className={`nav-item ${activeTab === label ? 'active' : ''}`}
           onClick={() => onSelectTab(label)}
         >
@@ -23,3 +24,4 @@ export function BottomNav({ activeTab, onSelectTab }: BottomNavProps) {
   );
 }
 
+export default BottomNav;

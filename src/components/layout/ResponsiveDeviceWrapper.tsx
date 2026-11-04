@@ -31,9 +31,11 @@ export function ResponsiveDeviceWrapper({ children }: ResponsiveDeviceWrapperPro
           </div>
         </div>
 
-        {/* Mobile View: Full Bleed Screen */}
-        <div className="flex sm:hidden w-full min-h-screen text-[#132d4d] bg-[#fbfcfe]">
-          {children}
+        {/* Mobile View: Fixed Full Screen Viewport */}
+        <div className="flex sm:hidden fixed inset-0 w-full h-[100dvh] max-h-[100dvh] text-[#132d4d] bg-[#fbfcfe] overflow-hidden">
+          <div className="relative w-full h-full overflow-hidden">
+            {children}
+          </div>
         </div>
       </main>
     </div>
