@@ -12,11 +12,18 @@ export function ResponsiveDeviceWrapper({ children }: ResponsiveDeviceWrapperPro
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#075cae]/10 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Main viewport */}
-      <main className="w-full h-full flex items-center justify-center p-0 sm:p-6 overflow-hidden z-20">
-        {/* Desktop / Tablet: Magic UI iPhone Presentation */}
-        <div className="hidden sm:flex items-center justify-center w-full h-full max-h-[96vh]">
-          <div className="w-full max-w-[370px] md:max-w-[395px] lg:max-w-[420px] max-h-[880px] drop-shadow-[0_25px_60px_rgba(0,0,0,0.6)]">
-            <Iphone className="w-full h-auto">
+      <main className="w-full h-full flex items-center justify-center p-0 sm:p-4 overflow-hidden z-20">
+        {/* Desktop / Tablet: Magic UI iPhone Presentation automatically scaled by viewport height */}
+        <div className="hidden sm:flex items-center justify-center w-full h-full">
+          <div
+            className="relative flex items-center justify-center drop-shadow-[0_20px_50px_rgba(0,0,0,0.65)] transition-all"
+            style={{
+              height: 'min(820px, calc(100dvh - 36px))',
+              aspectRatio: '433 / 882',
+              maxWidth: 'calc(100vw - 32px)',
+            }}
+          >
+            <Iphone className="w-full h-full">
               <div className="relative w-full h-full overflow-hidden text-[#132d4d] select-text">
                 {children}
               </div>
