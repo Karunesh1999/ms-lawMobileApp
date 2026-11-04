@@ -47,7 +47,7 @@ export function App() {
     }
 
     if (appFlow === 'auth') {
-      return <AuthScreen onLogin={() => setAppFlow('app')} />;
+      return <AuthScreen onLogin={() => setAppFlow('app')} onBack={() => setAppFlow('onboarding')} />;
     }
 
     return (

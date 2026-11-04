@@ -4,17 +4,27 @@ import { MSLawLogo } from '../../components/common/MSLawLogo';
 
 interface AuthScreenProps {
   onLogin: () => void;
+  onBack?: () => void;
 }
 
-export function AuthScreen({ onLogin }: AuthScreenProps) {
+export function AuthScreen({ onLogin, onBack }: AuthScreenProps) {
   const [mode, setMode] = useState<'login' | 'signup'>('login');
+
+  const handleBack = () => {
+    if (mode === 'signup') {
+      setMode('login');
+    } else if (onBack) {
+      onBack();
+    }
+  };
 
   return (
     <main className="entry-shell auth-screen">
       <div className="auth-top">
         <button
+          type="button"
           className="back-button"
-          onClick={() => setMode('login')}
+          onClick={handleBack}
           aria-label="Back"
         >
           <ChevronRight size={18} className="back-icon" />
@@ -60,14 +70,17 @@ export function AuthScreen({ onLogin }: AuthScreenProps) {
           </label>
         )}
 
-        <button className="primary-button wide" onClick={onLogin}>
+        <button type="button" className="primary-button wide" onClick={onLogin}>
           {mode === 'login' ? 'Log in' : 'Create account'}{' '}
           <ChevronRight size={16} />
         </button>
 
         <p className="auth-switch">
           {mode === 'login' ? 'New to Mallery & Stern?' : 'Already have an account?'}{' '}
-          <button onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}>
+          <button
+            type="button"
+            onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
+          >
             {mode === 'login' ? 'Sign up' : 'Log in'}
           </button>
         </p>
@@ -81,4 +94,3 @@ export function AuthScreen({ onLogin }: AuthScreenProps) {
 }
 
 export default AuthScreen;
-

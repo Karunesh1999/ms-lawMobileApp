@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import { X, ChevronRight, CalendarDays, CircleCheck } from 'lucide-react';
 import { ModalWrapper } from '../common/ModalWrapper';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
 
 interface BookConsultationModalProps {
   onClose: () => void;
@@ -10,6 +17,8 @@ interface BookConsultationModalProps {
 export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultationModalProps) {
   const [step, setStep] = useState<1 | 2>(1);
   const [submitted, setSubmitted] = useState(false);
+  const [service, setService] = useState<string>('');
+  const [time, setTime] = useState<string>('10:30 AM');
 
   const handleRequestAppointment = () => {
     setSubmitted(true);
@@ -25,7 +34,7 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
           <CircleCheck size={42} />
           <h2>Appointment requested</h2>
           <p>Thank you, Alex. Your request for a consultation has been sent to our team.</p>
-          <button className="primary-button wide" onClick={onClose}>
+          <button type="button" className="primary-button wide" onClick={onClose}>
             Done
           </button>
         </div>
@@ -36,7 +45,12 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
               <p className="eyebrow">STEP {step} OF 2</p>
               <h2>{step === 1 ? 'Choose a service' : 'Choose a date and time'}</h2>
             </div>
-            <button className="icon-button" onClick={onClose} aria-label="Close booking">
+            <button
+              type="button"
+              className="icon-button"
+              onClick={onClose}
+              aria-label="Close booking"
+            >
               <X size={18} />
             </button>
           </div>
@@ -45,15 +59,17 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
             <>
               <label>
                 What can we help with?
-                <select defaultValue="">
-                  <option value="" disabled>
-                    Select a legal service
-                  </option>
-                  <option>Workers' Compensation</option>
-                  <option>Employment Issues</option>
-                  <option>Wage & Hour Disputes</option>
-                  <option>Not sure / Need guidance</option>
-                </select>
+                <Select value={service} onValueChange={setService}>
+                  <SelectTrigger className="w-full mt-2">
+                    <SelectValue placeholder="Select a legal service" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Workers' Compensation">Workers' Compensation</SelectItem>
+                    <SelectItem value="Employment Issues">Employment Issues</SelectItem>
+                    <SelectItem value="Wage & Hour Disputes">Wage & Hour Disputes</SelectItem>
+                    <SelectItem value="Not sure / Need guidance">Not sure / Need guidance</SelectItem>
+                  </SelectContent>
+                </Select>
               </label>
 
               <label>
@@ -61,7 +77,11 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
                 <textarea placeholder="Share a brief overview..." />
               </label>
 
-              <button className="primary-button wide" onClick={() => setStep(2)}>
+              <button
+                type="button"
+                className="primary-button wide"
+                onClick={() => setStep(2)}
+              >
                 Continue to scheduling <ChevronRight size={16} />
               </button>
             </>
@@ -74,23 +94,36 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
 
               <label>
                 Available times
-                <select defaultValue="10:30">
-                  <option value="10:30">10:30 AM</option>
-                  <option value="1:00">1:00 PM</option>
-                  <option value="3:30">3:30 PM</option>
-                </select>
+                <Select value={time} onValueChange={setTime}>
+                  <SelectTrigger className="w-full mt-2">
+                    <SelectValue placeholder="Select a time" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="10:30 AM">10:30 AM</SelectItem>
+                    <SelectItem value="1:00 PM">1:00 PM</SelectItem>
+                    <SelectItem value="3:30 PM">3:30 PM</SelectItem>
+                  </SelectContent>
+                </Select>
               </label>
 
               <div className="booking-summary">
                 <CalendarDays size={16} />
-                <span>Video consultation with Jordan Williams</span>
+                <span>Video consultation with Jordan Williams ({time})</span>
               </div>
 
-              <button className="primary-button wide" onClick={handleRequestAppointment}>
+              <button
+                type="button"
+                className="primary-button wide"
+                onClick={handleRequestAppointment}
+              >
                 Request appointment <CircleCheck size={16} />
               </button>
 
-              <button className="text-button" onClick={() => setStep(1)}>
+              <button
+                type="button"
+                className="text-button"
+                onClick={() => setStep(1)}
+              >
                 Back to service details
               </button>
             </>
@@ -101,3 +134,4 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
   );
 }
 
+export default BookConsultationModal;

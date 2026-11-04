@@ -1,5 +1,5 @@
 import { useState, type KeyboardEvent } from 'react';
-import { ChevronRight, Phone } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Phone } from 'lucide-react';
 
 interface DirectMessageScreenProps {
   sent: boolean;
@@ -27,8 +27,13 @@ export function DirectMessageScreen({ sent, onClose, onSend }: DirectMessageScre
   return (
     <div className="dm-screen">
       <header className="dm-header">
-        <button className="icon-button" onClick={onClose} aria-label="Back to messages">
-          <ChevronRight size={18} className="back-icon" />
+        <button
+          type="button"
+          className="icon-button"
+          onClick={onClose}
+          aria-label="Back to messages"
+        >
+          <ChevronLeft size={18} />
         </button>
         <div className="dm-person">
           <div className="conversation-avatar">JW</div>
