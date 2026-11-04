@@ -1,58 +1,140 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { Navbar } from './components/layout/Navbar';
-import { Footer } from './components/layout/Footer';
-import { HomePage } from './pages/Home';
-import { AboutPage } from './pages/About';
-import { ServicesPage } from './pages/Services';
-import { ResourcesPage } from './pages/Resources';
-import { QuoteModal } from './components/modals/QuoteModal';
-import { ResponsiveDeviceWrapper } from './components/demo/Demo';
+import type { AppFlowState, TabType } from './types/portal';
+import { Topbar } from './components/layout/Topbar';
+import { BottomNav } from './components/layout/BottomNav';
+import { NotificationsModal } from './components/modals/NotificationsModal';
+import { BookConsultationModal } from './components/modals/BookConsultationModal';
+import { UploadDocumentModal } from './components/modals/UploadDocumentModal';
 
-// Auto scroll to top on page navigation
-function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return null;
-}
+import { SplashScreen } from './pages/Splash';
+import { OnboardingScreen } from './pages/Onboarding';
+import { AuthScreen } from './pages/Auth';
+import { HomeScreen } from './pages/Home';
+import { CasesScreen, CaseDetailsScreen } from './pages/Cases';
+import { AppointmentsScreen } from './pages/Appointments';
+import { MessagesScreen, DirectMessageScreen } from './pages/Messages';
+import { ProfileScreen } from './pages/Profile';
 
 export function App() {
-  const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  const [appFlow, setAppFlow] = useState<AppFlowState>('splash');
+  const [currentTab, setCurrentTab] = useState<TabType>('Home');
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setAppFlow('onboarding'), 1800);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [isMessageSent, setIsMessageSent] = useState(false);
+  const [isDmOpen, setIsDmOpen] = useState(false);
+  const [isBooked, setIsBooked] = useState(false);
+
+  const handleTab = (tab: TabType) => {
+    setCurrentTab(tab);
+    setIsNotificationsOpen(false);
+  };
+
+  if (appFlow === 'splash') {
+    return <SplashScreen />;
+  }
+
+  if (appFlow === 'onboarding') {
+    return <OnboardingScreen onGetStarted={() => setAppFlow('auth')} />;
+  }
+
+  if (appFlow === 'auth') {
+    return <AuthScreen onLogin={() => setAppFlow('app')} />;
+  }
 
   return (
-    <ResponsiveDeviceWrapper>
-      <Router>
-        <ScrollToTop />
-        <div className="min-h-screen flex flex-col bg-white text-[#1F2937] overflow-x-hidden">
-          {/* Navigation Bar (Tier 1: White Contact Bar + Tier 2: Navy Navigation Bar) */}
-          <Navbar onOpenQuote={() => setIsConsultationOpen(true)} />
+    <main className="app-shell">
+      <div className="phone-frame">
+        <Topbar
+          onOpenNotifications={() => setIsNotificationsOpen(true)}
+          onOpenProfile={() => handleTab('Profile')}
+        />
 
-          {/* Main Content Area */}
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<HomePage onOpenQuote={() => setIsConsultationOpen(true)} />} />
-              <Route path="/about" element={<AboutPage onOpenQuote={() => setIsConsultationOpen(true)} />} />
-              <Route path="/about-us" element={<AboutPage onOpenQuote={() => setIsConsultationOpen(true)} />} />
-              <Route path="/services" element={<ServicesPage onOpenQuote={() => setIsConsultationOpen(true)} />} />
-              <Route path="/our-services" element={<ServicesPage onOpenQuote={() => setIsConsultationOpen(true)} />} />
-              <Route path="/resources" element={<ResourcesPage onOpenQuote={() => setIsConsultationOpen(true)} />} />
-              <Route path="*" element={<HomePage onOpenQuote={() => setIsConsultationOpen(true)} />} />
-            </Routes>
-          </main>
+        <div className="content-scroll">
+          {currentTab === 'Home' && (
+            <HomeScreen
+              onConsult={() => setIsConsultModalOpen(true)}
+              onUpload={() => setIsUploadModalOpen(true)}
+              onTab={handleTab}
+            />
+          )}
 
-          {/* Comprehensive Professional Law Firm Footer */}
-          <Footer onOpenQuote={() => setIsConsultationOpen(true)} />
+          {currentTab === 'My Cases' && (
+            <CasesScreen
+              onTab={handleTab}
+              onOpenCase={() => setCurrentTab('Case details')}
+            />
+          )}
 
-          {/* Universal Free Consultation Modal */}
-          <QuoteModal
-            isOpen={isConsultationOpen}
-            onClose={() => setIsConsultationOpen(false)}
-          />
+          {currentTab === 'Case details' && (
+            <CaseDetailsScreen
+              onBack={() => setCurrentTab('My Cases')}
+              onMessage={() => {
+                setCurrentTab('Messages');
+                setIsDmOpen(true);
+              }}
+              onUpload={() => setIsUploadModalOpen(true)}
+            />
+          )}
+
+          {currentTab === 'Appointments' && (
+            <AppointmentsScreen
+              onConsult={() => setIsConsultModalOpen(true)}
+              booked={isBooked}
+            />
+          )}
+
+          {currentTab === 'Messages' && (
+            <MessagesScreen
+              sent={isMessageSent}
+              onSend={() => setIsMessageSent(true)}
+              onOpenDm={() => setIsDmOpen(true)}
+            />
+          )}
+
+          {currentTab === 'Profile' && (
+            <ProfileScreen
+              onTab={handleTab}
+              onLogout={() => {
+                setAppFlow('splash');
+                setCurrentTab('Home');
+              }}
+            />
+          )}
         </div>
-      </Router>
-    </ResponsiveDeviceWrapper>
+
+        <BottomNav activeTab={currentTab} onSelectTab={handleTab} />
+
+        {isNotificationsOpen && (
+          <NotificationsModal onClose={() => setIsNotificationsOpen(false)} />
+        )}
+
+        {isConsultModalOpen && (
+          <BookConsultationModal
+            onClose={() => setIsConsultModalOpen(false)}
+            onBookSuccess={() => setIsBooked(true)}
+          />
+        )}
+
+        {isUploadModalOpen && (
+          <UploadDocumentModal onClose={() => setIsUploadModalOpen(false)} />
+        )}
+
+        {isDmOpen && (
+          <DirectMessageScreen
+            sent={isMessageSent}
+            onClose={() => setIsDmOpen(false)}
+            onSend={() => setIsMessageSent(true)}
+          />
+        )}
+      </div>
+    </main>
   );
 }
 
