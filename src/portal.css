@@ -55,3 +55,78 @@
   color: #20598f;
   font-weight: 700;
 }
+
+/* Logout Confirmation Modal */
+.logout-warning-box {
+  background: #fdf5f5;
+  border: 1px solid #f8d7da;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-top: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.logout-warning-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fde8e8;
+  color: #d93838;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logout-warning-box strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #132d4d;
+  margin-bottom: 4px;
+}
+
+.logout-warning-box p {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #6f7d8d;
+  margin: 0;
+}
+
+.logout-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.logout-actions button {
+  flex: 1;
+}
+
+.danger-button {
+  background: #d93838;
+  color: #ffffff;
+  border: 0;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px rgba(217, 56, 56, 0.25);
+  transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+  cursor: pointer;
+}
+
+.danger-button:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 6px 16px rgba(217, 56, 56, 0.35);
+}
+
+.danger-button:active {
+  transform: scale(0.98);
+}

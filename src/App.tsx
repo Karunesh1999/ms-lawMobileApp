@@ -6,6 +6,7 @@ import { ResponsiveDeviceWrapper } from './components/layout/ResponsiveDeviceWra
 import { NotificationsModal } from './components/modals/NotificationsModal';
 import { BookConsultationModal } from './components/modals/BookConsultationModal';
 import { UploadDocumentModal } from './components/modals/UploadDocumentModal';
+import { LogoutConfirmModal } from './components/modals/LogoutConfirmModal';
 
 import { SplashScreen } from './pages/Splash';
 import { OnboardingScreen } from './pages/Onboarding';
@@ -31,10 +32,21 @@ export function App() {
   const [isMessageSent, setIsMessageSent] = useState(false);
   const [isDmOpen, setIsDmOpen] = useState(false);
   const [isBooked, setIsBooked] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const handleTab = (tab: TabType) => {
     setCurrentTab(tab);
     setIsNotificationsOpen(false);
+  };
+
+  const handleConfirmLogout = () => {
+    setIsLogoutModalOpen(false);
+    setIsNotificationsOpen(false);
+    setIsConsultModalOpen(false);
+    setIsUploadModalOpen(false);
+    setIsDmOpen(false);
+    setCurrentTab('Home');
+    setAppFlow('auth');
   };
 
   const renderActiveScreen = () => {
@@ -102,10 +114,7 @@ export function App() {
           {currentTab === 'Profile' && (
             <ProfileScreen
               onTab={handleTab}
-              onLogout={() => {
-                setAppFlow('splash');
-                setCurrentTab('Home');
-              }}
+              onLogout={() => setIsLogoutModalOpen(true)}
             />
           )}
         </div>
@@ -125,6 +134,13 @@ export function App() {
 
         {isUploadModalOpen && (
           <UploadDocumentModal onClose={() => setIsUploadModalOpen(false)} />
+        )}
+
+        {isLogoutModalOpen && (
+          <LogoutConfirmModal
+            onClose={() => setIsLogoutModalOpen(false)}
+            onConfirm={handleConfirmLogout}
+          />
         )}
 
         {isDmOpen && (
