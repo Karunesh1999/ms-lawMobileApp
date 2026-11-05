@@ -51,7 +51,17 @@ export function ProfileScreen({ onLogout }: ProfileScreenProps) {
       <SectionHeader title="Profile" subtitle="Manage your account and preferences." />
 
       <div className="profile-card">
-        <div className="profile-avatar">{getInitials(profile.name)}</div>
+        <div className="profile-avatar overflow-hidden">
+          {profile.avatarUrl ? (
+            <img
+              src={profile.avatarUrl}
+              alt={profile.name}
+              className="w-full h-full object-cover rounded-full"
+            />
+          ) : (
+            getInitials(profile.name)
+          )}
+        </div>
         <div>
           <h2>{profile.name}</h2>
           <p>Client ID · MS-2026-001</p>

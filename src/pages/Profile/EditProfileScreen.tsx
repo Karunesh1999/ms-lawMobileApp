@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ChevronLeft, Camera, CircleCheck, Save } from 'lucide-react';
+import { useState, useRef, type ChangeEvent } from 'react';
+import { ChevronLeft, Camera, CircleCheck, Save, Trash2 } from 'lucide-react';
 import { SectionHeader } from '../../components/common/SectionHeader';
 
 export interface UserProfileData {
@@ -8,6 +8,7 @@ export interface UserProfileData {
   phone: string;
   address: string;
   emergencyContact: string;
+  avatarUrl?: string;
 }
 
 interface EditProfileScreenProps {
@@ -19,6 +20,7 @@ interface EditProfileScreenProps {
 export function EditProfileScreen({ profile, onSave, onBack }: EditProfileScreenProps) {
   const [formData, setFormData] = useState<UserProfileData>({ ...profile });
   const [isSaved, setIsSaved] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const getInitials = (name: string) => {
     return name
@@ -30,13 +32,46 @@ export function EditProfileScreen({ profile, onSave, onBack }: EditProfileScreen
       .slice(0, 2) || 'AM';
   };
 
+  const handlePhotoUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size exceeds 5 MB. Please choose a smaller image.');
+      return;
+    }
+
+    // Validate image format
+    if (!file.type.startsWith('image/')) {
+      alert('Please upload a valid image file (JPG, PNG, or WEBP).');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result as string;
+      if (result) {
+        setFormData((prev) => ({ ...prev, avatarUrl: result }));
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemovePhoto = () => {
+    setFormData((prev) => ({ ...prev, avatarUrl: undefined }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSave(formData);
     setIsSaved(true);
     setTimeout(() => {
       onBack();
-    }, 600);
+    }, 500);
   };
 
   return (
@@ -47,7 +82,7 @@ export function EditProfileScreen({ profile, onSave, onBack }: EditProfileScreen
 
       <SectionHeader
         title="Edit profile"
-        subtitle="Update your personal and contact details."
+        subtitle="Update your personal details and profile picture."
       />
 
       {isSaved && (
@@ -57,21 +92,57 @@ export function EditProfileScreen({ profile, onSave, onBack }: EditProfileScreen
         </div>
       )}
 
-      {/* Avatar Card */}
+      {/* Hidden File Input for Image Upload */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/png,image/jpeg,image/jpg,image/webp"
+        style={{ display: 'none' }}
+        onChange={handlePhotoUpload}
+      />
+
+      {/* Avatar Card with Photo Upload */}
       <div className="edit-avatar-section">
-        <div className="edit-avatar-circle">
-          {getInitials(formData.name)}
+        <div
+          className="edit-avatar-circle group relative cursor-pointer"
+          onClick={() => fileInputRef.current?.click()}
+          title="Click to upload new photo"
+        >
+          {formData.avatarUrl ? (
+            <img
+              src={formData.avatarUrl}
+              alt={formData.name}
+              className="w-full h-full object-cover rounded-full"
+            />
+          ) : (
+            getInitials(formData.name)
+          )}
+          <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity rounded-full flex items-center justify-center text-white">
+            <Camera size={18} />
+          </div>
         </div>
-        <div>
+
+        <div className="flex-1">
           <h3 className="text-[14px] font-bold text-[#132d4d] m-0">{formData.name}</h3>
           <p className="text-[11px] text-[#8291a0] mt-0.5 mb-2.5">Client ID · MS-2026-001</p>
-          <button
-            type="button"
-            className="change-photo-btn"
-            onClick={() => alert('Photo upload dialog would open here.')}
-          >
-            <Camera size={13} /> Change photo
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="change-photo-btn"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <Camera size={13} /> {formData.avatarUrl ? 'Change photo' : 'Upload photo'}
+            </button>
+            {formData.avatarUrl && (
+              <button
+                type="button"
+                className="text-[11px] text-[#d93838] hover:text-[#b82626] font-semibold flex items-center gap-1 px-2 py-1 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-200/60"
+                onClick={handleRemovePhoto}
+              >
+                <Trash2 size={12} /> Remove
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -155,4 +226,3 @@ export function EditProfileScreen({ profile, onSave, onBack }: EditProfileScreen
 }
 
 export default EditProfileScreen;
-
