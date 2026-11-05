@@ -272,3 +272,44 @@
   border-color: #e2e8f0 !important;
   box-shadow: none !important;
 }
+
+/* Quick Actions Grid Responsive Fix to prevent right-edge clipping */
+.content-scroll {
+  overflow-x: hidden !important;
+}
+
+.quick-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.action-card {
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  padding: 10px 8px !important;
+  gap: 6px !important;
+  overflow: hidden !important;
+}
+
+.action-card span {
+  width: 28px !important;
+  height: 28px !important;
+  flex-shrink: 0 !important;
+}
+
+.action-card strong {
+  flex: 1 !important;
+  min-width: 0 !important;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+}
+
+.action-card svg:last-child {
+  flex-shrink: 0 !important;
+}

@@ -117,10 +117,13 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
                 </Select>
               </label>
 
-              <div className="flex items-center gap-2 bg-[#eef7fc] text-[#075cae] rounded-[10px] px-3 py-2 text-[10.5px]">
-                <CalendarDays size={14} className="shrink-0" />
-                <span className="truncate">
-                  Video consultation with Jordan Williams on {formattedDateSummary} ({time})
+              <div className="flex items-start gap-2.5 bg-[#eef7fc] text-[#075cae] rounded-[10px] px-3 py-2 text-[11px] leading-snug">
+                <CalendarDays size={15} className="shrink-0 mt-0.5 text-[#075cae]" />
+                <span className="flex-1 text-[#132d4d]">
+                  Video consultation with Jordan Williams on{' '}
+                  <strong className="text-[#075cae] font-bold whitespace-nowrap">
+                    {formattedDateSummary} ({time})
+                  </strong>
                 </span>
               </div>
 
