@@ -125,23 +125,23 @@ export function EditProfileScreen({ profile, onSave, onBack }: EditProfileScreen
         <div className="flex-1 min-w-0">
           <h3 className="text-[14px] font-bold text-[#132d4d] m-0 truncate">{formData.name}</h3>
           <p className="text-[10.5px] text-[#8291a0] mt-0.5 mb-2 truncate">Client ID · MS-2026-001</p>
-          <div className="flex items-center gap-1.5 flex-nowrap">
+          <div className="flex items-center gap-1.5 flex-wrap">
             <button
               type="button"
-              className="change-photo-btn whitespace-nowrap"
+              className="change-photo-btn whitespace-nowrap shrink-0"
               onClick={() => fileInputRef.current?.click()}
             >
               <Camera size={12} className="shrink-0" />
-              <span>{formData.avatarUrl ? 'Change photo' : 'Upload photo'}</span>
+              <span className="whitespace-nowrap">{formData.avatarUrl ? 'Change photo' : 'Upload photo'}</span>
             </button>
             {formData.avatarUrl && (
               <button
                 type="button"
-                className="text-[10.5px] text-[#d93838] hover:text-[#b82626] font-semibold flex items-center gap-1 px-2 py-1 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-200/60 whitespace-nowrap shrink-0"
+                className="remove-photo-btn text-[10.5px] text-[#d93838] hover:text-[#b82626] font-semibold flex items-center gap-1 px-2 py-1 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-200/60 whitespace-nowrap shrink-0"
                 onClick={handleRemovePhoto}
               >
                 <Trash2 size={11} className="shrink-0" />
-                <span>Remove</span>
+                <span className="whitespace-nowrap">Remove</span>
               </button>
             )}
           </div>
