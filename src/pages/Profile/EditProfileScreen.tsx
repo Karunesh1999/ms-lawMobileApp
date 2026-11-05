@@ -1,5 +1,5 @@
 import { useState, useRef, type ChangeEvent } from 'react';
-import { ChevronLeft, Camera, CircleCheck, Save, Trash2 } from 'lucide-react';
+import { ChevronLeft, Camera, CircleCheck, Save, Trash2, Lock } from 'lucide-react';
 import { SectionHeader } from '../../components/common/SectionHeader';
 
 export interface UserProfileData {
@@ -161,14 +161,20 @@ export function EditProfileScreen({ profile, onSave, onBack }: EditProfileScreen
         </div>
 
         <div className="edit-field-group">
-          <label htmlFor="edit-email">Email address</label>
+          <div className="flex items-center justify-between mb-1.5">
+            <label htmlFor="edit-email" className="!mb-0">Email address</label>
+            <span className="text-[10px] text-[#8a9bab] font-medium flex items-center gap-1">
+              <Lock size={11} /> Cannot be changed
+            </span>
+          </div>
           <input
             id="edit-email"
             type="email"
-            required
+            readOnly
+            disabled
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            placeholder="your.email@example.com"
+            className="!bg-[#f4f7fa] !text-[#718292] !cursor-not-allowed !border-[#e2e8f0] select-none"
+            title="Email address is linked to your client account and cannot be modified."
           />
         </div>
 
