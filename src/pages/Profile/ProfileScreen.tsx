@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { UserRound, FileText, MessageCircle, Ellipsis, ChevronRight, Phone } from 'lucide-react';
 import { SectionHeader } from '../../components/common/SectionHeader';
+import { EditProfileScreen, type UserProfileData } from './EditProfileScreen';
 import type { TabType } from '../../types/portal';
 
 interface ProfileScreenProps {
@@ -8,8 +10,37 @@ interface ProfileScreenProps {
 }
 
 export function ProfileScreen({ onLogout }: ProfileScreenProps) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [profile, setProfile] = useState<UserProfileData>({
+    name: 'Alex Morgan',
+    email: 'alex.morgan@example.com',
+    phone: '(213) 555-0148',
+    address: '742 Evergreen Terrace, Los Angeles, CA 90012',
+    emergencyContact: 'Taylor Morgan · (213) 555-0199',
+  });
+
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .filter(Boolean)
+      .map((part) => part[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2) || 'AM';
+  };
+
+  if (isEditing) {
+    return (
+      <EditProfileScreen
+        profile={profile}
+        onSave={(updated) => setProfile(updated)}
+        onBack={() => setIsEditing(false)}
+      />
+    );
+  }
+
   const menuOptions = [
-    { title: 'Personal information', icon: UserRound },
+    { title: 'Personal information', icon: UserRound, onClick: () => setIsEditing(true) },
     { title: 'My documents', icon: FileText },
     { title: 'Help & support', icon: MessageCircle },
     { title: 'General settings', icon: Ellipsis },
@@ -20,17 +51,28 @@ export function ProfileScreen({ onLogout }: ProfileScreenProps) {
       <SectionHeader title="Profile" subtitle="Manage your account and preferences." />
 
       <div className="profile-card">
-        <div className="profile-avatar">AM</div>
+        <div className="profile-avatar">{getInitials(profile.name)}</div>
         <div>
-          <h2>Alex Morgan</h2>
+          <h2>{profile.name}</h2>
           <p>Client ID · MS-2026-001</p>
         </div>
-        <button className="edit-button">Edit</button>
+        <button
+          type="button"
+          className="edit-button"
+          onClick={() => setIsEditing(true)}
+        >
+          Edit
+        </button>
       </div>
 
       <div className="menu-list">
-        {menuOptions.map(({ title, icon: Icon }) => (
-          <button key={title} className="menu-row">
+        {menuOptions.map(({ title, icon: Icon, onClick }) => (
+          <button
+            key={title}
+            type="button"
+            className="menu-row"
+            onClick={onClick}
+          >
             <span className="menu-icon">
               <Icon size={18} />
             </span>
@@ -48,7 +90,7 @@ export function ProfileScreen({ onLogout }: ProfileScreenProps) {
         </div>
       </div>
 
-      <button className="logout-button" onClick={onLogout}>
+      <button type="button" className="logout-button" onClick={onLogout}>
         Log out
       </button>
 
@@ -60,4 +102,3 @@ export function ProfileScreen({ onLogout }: ProfileScreenProps) {
 }
 
 export default ProfileScreen;
-
