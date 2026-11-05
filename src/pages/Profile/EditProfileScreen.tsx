@@ -118,28 +118,30 @@ export function EditProfileScreen({ profile, onSave, onBack }: EditProfileScreen
             getInitials(formData.name)
           )}
           <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity rounded-full flex items-center justify-center text-white">
-            <Camera size={18} />
+            <Camera size={16} />
           </div>
         </div>
 
-        <div className="flex-1">
-          <h3 className="text-[14px] font-bold text-[#132d4d] m-0">{formData.name}</h3>
-          <p className="text-[11px] text-[#8291a0] mt-0.5 mb-2.5">Client ID · MS-2026-001</p>
-          <div className="flex items-center gap-2">
+        <div className="flex-1 min-w-0">
+          <h3 className="text-[14px] font-bold text-[#132d4d] m-0 truncate">{formData.name}</h3>
+          <p className="text-[10.5px] text-[#8291a0] mt-0.5 mb-2 truncate">Client ID · MS-2026-001</p>
+          <div className="flex items-center gap-1.5 flex-nowrap">
             <button
               type="button"
-              className="change-photo-btn"
+              className="change-photo-btn whitespace-nowrap"
               onClick={() => fileInputRef.current?.click()}
             >
-              <Camera size={13} /> {formData.avatarUrl ? 'Change photo' : 'Upload photo'}
+              <Camera size={12} className="shrink-0" />
+              <span>{formData.avatarUrl ? 'Change photo' : 'Upload photo'}</span>
             </button>
             {formData.avatarUrl && (
               <button
                 type="button"
-                className="text-[11px] text-[#d93838] hover:text-[#b82626] font-semibold flex items-center gap-1 px-2 py-1 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-200/60"
+                className="text-[10.5px] text-[#d93838] hover:text-[#b82626] font-semibold flex items-center gap-1 px-2 py-1 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-200/60 whitespace-nowrap shrink-0"
                 onClick={handleRemovePhoto}
               >
-                <Trash2 size={12} /> Remove
+                <Trash2 size={11} className="shrink-0" />
+                <span>Remove</span>
               </button>
             )}
           </div>
