@@ -93,20 +93,20 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
               </button>
             </>
           ) : (
-            <>
-              <label>
+            <div className="flex flex-col gap-2.5">
+              <label className="text-[11px] font-semibold text-[#132d4d] block !m-0">
                 Choose a date
                 <DatePicker
                   value={selectedDate}
                   onChange={setSelectedDate}
-                  className="mt-2"
+                  className="mt-1"
                 />
               </label>
 
-              <label>
+              <label className="text-[11px] font-semibold text-[#132d4d] block !m-0">
                 Available times
                 <Select value={time} onValueChange={setTime}>
-                  <SelectTrigger className="w-full mt-2">
+                  <SelectTrigger className="w-full mt-1 h-9 text-[11.5px]">
                     <SelectValue placeholder="Select a time" />
                   </SelectTrigger>
                   <SelectContent>
@@ -117,29 +117,29 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
                 </Select>
               </label>
 
-              <div className="booking-summary">
-                <CalendarDays size={16} />
-                <span>
+              <div className="flex items-center gap-2 bg-[#eef7fc] text-[#075cae] rounded-[10px] px-3 py-2 text-[10.5px]">
+                <CalendarDays size={14} className="shrink-0" />
+                <span className="truncate">
                   Video consultation with Jordan Williams on {formattedDateSummary} ({time})
                 </span>
               </div>
 
               <button
                 type="button"
-                className="primary-button wide"
+                className="primary-button wide py-2.5 text-[12px] !mt-0.5"
                 onClick={handleRequestAppointment}
               >
-                Request appointment <CircleCheck size={16} />
+                Request appointment <CircleCheck size={15} />
               </button>
 
               <button
                 type="button"
-                className="text-button"
+                className="text-button text-[11px] py-0.5 text-center w-full !mt-0"
                 onClick={() => setStep(1)}
               >
                 Back to service details
               </button>
-            </>
+            </div>
           )}
         </>
       )}

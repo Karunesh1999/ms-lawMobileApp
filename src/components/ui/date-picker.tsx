@@ -134,7 +134,7 @@ export function DatePicker({
       className={cn(
         "w-full transition-all duration-200 box-border",
         isOpen
-          ? "rounded-[14px] border-2 border-[#075cae] bg-white shadow-[0_6px_20px_rgba(7,92,174,0.12)] overflow-hidden"
+          ? "rounded-[12px] border-2 border-[#075cae] bg-white shadow-[0_4px_16px_rgba(7,92,174,0.10)] overflow-hidden"
           : "rounded-[10px] border border-[#e4ebf3] bg-[#fbfcfe] hover:border-[#b8ddf5]",
         className
       )}
@@ -144,19 +144,19 @@ export function DatePicker({
         type="button"
         onClick={toggleOpen}
         className={cn(
-          "flex h-11 w-full items-center justify-between px-3.5 py-2 text-[12px] text-[#132d4d] outline-none transition-colors",
+          "flex h-9.5 w-full items-center justify-between px-3 py-1.5 text-[11.5px] text-[#132d4d] outline-none transition-colors",
           isOpen ? "bg-[#f8fafc] border-b border-[#edf2f7]" : "bg-transparent"
         )}
       >
-        <div className="flex items-center gap-2.5">
-          <CalendarIcon className="h-4 w-4 text-[#075cae] shrink-0" />
+        <div className="flex items-center gap-2">
+          <CalendarIcon className="h-3.5 w-3.5 text-[#075cae] shrink-0" />
           <span className="font-semibold text-[#132d4d]">
             {selectedDate ? formatDisplayDate(selectedDate) : placeholder}
           </span>
         </div>
         <ChevronDown
           className={cn(
-            "h-4 w-4 text-[#8a9bab] transition-transform duration-200",
+            "h-3.5 w-3.5 text-[#8a9bab] transition-transform duration-200",
             isOpen && "rotate-180 text-[#075cae]"
           )}
         />
@@ -164,47 +164,47 @@ export function DatePicker({
 
       {/* Unified Integrated Calendar Body */}
       {isOpen && (
-        <div className="p-3 bg-white box-border animate-in fade-in-0 duration-150">
+        <div className="p-2.5 bg-white box-border animate-in fade-in-0 duration-150">
           {mode === "days" ? (
             <>
               {/* Header: Month/Year button + Prev/Next navigation */}
-              <div className="flex items-center justify-between pb-2 mb-1.5 border-b border-[#f0f4f8]">
+              <div className="flex items-center justify-between pb-1.5 mb-1 border-b border-[#f0f4f8]">
                 <button
                   type="button"
                   onClick={() => setMode("month-year")}
-                  className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[13px] font-bold text-[#132d4d] hover:bg-[#edf5fb] hover:text-[#075cae] transition-colors"
+                  className="flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[12px] font-bold text-[#132d4d] hover:bg-[#edf5fb] hover:text-[#075cae] transition-colors"
                   title="Click to select month and year"
                 >
                   <span>{MONTH_NAMES[month]} {year}</span>
-                  <ChevronDown className="h-3.5 w-3.5 text-[#075cae]" />
+                  <ChevronDown className="h-3 w-3 text-[#075cae]" />
                 </button>
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-0.5">
                   <button
                     type="button"
                     onClick={handlePrevMonth}
-                    className="flex h-7 w-7 items-center justify-center rounded-lg text-[#6f7d8d] hover:bg-[#edf4fb] hover:text-[#075cae] transition-colors"
+                    className="flex h-6 w-6 items-center justify-center rounded-md text-[#6f7d8d] hover:bg-[#edf4fb] hover:text-[#075cae] transition-colors"
                     aria-label="Previous month"
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ChevronLeft className="h-3.5 w-3.5" />
                   </button>
                   <button
                     type="button"
                     onClick={handleNextMonth}
-                    className="flex h-7 w-7 items-center justify-center rounded-lg text-[#6f7d8d] hover:bg-[#edf4fb] hover:text-[#075cae] transition-colors"
+                    className="flex h-6 w-6 items-center justify-center rounded-md text-[#6f7d8d] hover:bg-[#edf4fb] hover:text-[#075cae] transition-colors"
                     aria-label="Next month"
                   >
-                    <ChevronRight className="h-4 w-4" />
+                    <ChevronRight className="h-3.5 w-3.5" />
                   </button>
                 </div>
               </div>
 
               {/* Days of Week Row */}
-              <div className="grid grid-cols-7 mb-1 text-center">
+              <div className="grid grid-cols-7 mb-0.5 text-center">
                 {WEEKDAYS.map((wd) => (
                   <div
                     key={wd}
-                    className="py-1 text-[11px] font-semibold text-[#8a9bab]"
+                    className="py-0.5 text-[10px] font-semibold text-[#8a9bab]"
                   >
                     {wd}
                   </div>
@@ -212,14 +212,14 @@ export function DatePicker({
               </div>
 
               {/* Days Grid */}
-              <div className="grid grid-cols-7 gap-1">
+              <div className="grid grid-cols-7 gap-0.5">
                 {/* Previous month filler days */}
                 {Array.from({ length: firstDayOfWeek }).map((_, i) => {
                   const dayNum = daysInPrevMonth - firstDayOfWeek + i + 1;
                   return (
                     <div
                       key={`prev-${i}`}
-                      className="flex h-8 w-8 items-center justify-center text-[11px] text-[#ccd6e0] select-none mx-auto"
+                      className="flex h-7 w-7 items-center justify-center text-[10px] text-[#ccd6e0] select-none mx-auto"
                     >
                       {dayNum}
                     </div>
@@ -240,9 +240,9 @@ export function DatePicker({
                       disabled={disabled}
                       onClick={() => handleSelectDay(dayNum)}
                       className={cn(
-                        "flex h-8 w-8 items-center justify-center rounded-lg text-[12px] font-medium transition-all mx-auto",
+                        "flex h-7 w-7 items-center justify-center rounded-md text-[11px] font-medium transition-all mx-auto",
                         selected
-                          ? "bg-[#075cae] text-white font-bold shadow-[0_2px_8px_rgba(7,92,174,0.35)]"
+                          ? "bg-[#075cae] text-white font-bold shadow-[0_2px_6px_rgba(7,92,174,0.35)]"
                           : today
                           ? "border border-[#075cae] text-[#075cae] font-semibold bg-[#f0f6fc]"
                           : "text-[#132d4d] hover:bg-[#edf5fb] hover:text-[#075cae]",
@@ -256,7 +256,7 @@ export function DatePicker({
               </div>
 
               {/* Quick Footer */}
-              <div className="mt-3 pt-2 border-t border-[#f0f4f8] flex items-center justify-between text-[11px]">
+              <div className="mt-1.5 pt-1 border-t border-[#f0f4f8] flex items-center justify-between text-[10.5px]">
                 <button
                   type="button"
                   onClick={handleSelectToday}
@@ -271,30 +271,30 @@ export function DatePicker({
             </>
           ) : (
             /* Month & Year Selection View */
-            <div className="py-1">
-              <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#f0f4f8]">
-                <span className="text-[12px] font-bold text-[#132d4d]">Select Month & Year</span>
+            <div className="py-0.5">
+              <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[#f0f4f8]">
+                <span className="text-[11.5px] font-bold text-[#132d4d]">Select Month & Year</span>
                 <button
                   type="button"
                   onClick={() => setMode("days")}
-                  className="flex items-center gap-1 text-[11px] font-semibold text-[#075cae] hover:underline"
+                  className="flex items-center gap-1 text-[10.5px] font-semibold text-[#075cae] hover:underline"
                 >
-                  <ChevronLeft className="h-3.5 w-3.5" /> Back to calendar
+                  <ChevronLeft className="h-3 w-3" /> Back
                 </button>
               </div>
 
               {/* Year Selector Pills */}
-              <div className="text-[10px] font-semibold text-[#8a9bab] uppercase tracking-wider mb-1 px-1">
+              <div className="text-[9.5px] font-semibold text-[#8a9bab] uppercase tracking-wider mb-1 px-0.5">
                 Year
               </div>
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-2 mb-2.5 scrollbar-none">
+              <div className="flex items-center gap-1 overflow-x-auto pb-1.5 mb-2 scrollbar-none">
                 {YEARS.map((y) => (
                   <button
                     key={y}
                     type="button"
                     onClick={() => setViewDate(new Date(y, month, 1))}
                     className={cn(
-                      "px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all shrink-0",
+                      "px-2 py-0.5 rounded-md text-[10.5px] font-semibold transition-all shrink-0",
                       year === y
                         ? "bg-[#075cae] text-white shadow-sm font-bold"
                         : "bg-[#f4f7fa] text-[#6f7d8d] hover:bg-[#edf5fb] hover:text-[#075cae]"
@@ -306,10 +306,10 @@ export function DatePicker({
               </div>
 
               {/* Month 3x4 Grid */}
-              <div className="text-[10px] font-semibold text-[#8a9bab] uppercase tracking-wider mb-1 px-1">
+              <div className="text-[9.5px] font-semibold text-[#8a9bab] uppercase tracking-wider mb-1 px-0.5">
                 Month
               </div>
-              <div className="grid grid-cols-3 gap-1.5">
+              <div className="grid grid-cols-3 gap-1">
                 {MONTH_SHORT.map((mShort, idx) => {
                   const isCurrentMonth = idx === month;
                   return (
@@ -321,7 +321,7 @@ export function DatePicker({
                         setMode("days");
                       }}
                       className={cn(
-                        "py-2 rounded-lg text-[12px] font-medium transition-all text-center",
+                        "py-1.5 rounded-md text-[11px] font-medium transition-all text-center",
                         isCurrentMonth
                           ? "bg-[#075cae] text-white shadow-sm font-bold"
                           : "bg-[#f8fafc] text-[#132d4d] border border-[#eef2f6] hover:bg-[#edf5fb] hover:border-[#b8ddf5] hover:text-[#075cae]"
