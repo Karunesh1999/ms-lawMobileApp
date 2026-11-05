@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
+import { DatePicker } from '../ui/date-picker';
 
 interface BookConsultationModalProps {
   onClose: () => void;
@@ -18,6 +19,7 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
   const [step, setStep] = useState<1 | 2>(1);
   const [submitted, setSubmitted] = useState(false);
   const [service, setService] = useState<string>('');
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date(2026, 10, 14));
   const [time, setTime] = useState<string>('10:30 AM');
 
   const handleRequestAppointment = () => {
@@ -26,6 +28,11 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
       onBookSuccess();
     }
   };
+
+  const formattedDateSummary = selectedDate.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+  });
 
   return (
     <ModalWrapper onClose={onClose}>
@@ -89,7 +96,11 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
             <>
               <label>
                 Choose a date
-                <input className="date-input" type="date" defaultValue="2026-11-14" />
+                <DatePicker
+                  value={selectedDate}
+                  onChange={setSelectedDate}
+                  className="mt-2"
+                />
               </label>
 
               <label>
@@ -108,7 +119,9 @@ export function BookConsultationModal({ onClose, onBookSuccess }: BookConsultati
 
               <div className="booking-summary">
                 <CalendarDays size={16} />
-                <span>Video consultation with Jordan Williams ({time})</span>
+                <span>
+                  Video consultation with Jordan Williams on {formattedDateSummary} ({time})
+                </span>
               </div>
 
               <button
